@@ -1,0 +1,376 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='robot1'>
+    <pose frame=''>0 0 0 0 0 0</pose>
+    <link name='body'>
+      <inertial>
+        <mass>2.0</mass>
+        <inertia>
+          <ixx>0.05</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.05</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.05</izz>
+        </inertia>
+      </inertial>
+      <collision name='body_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='body_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.6 0.4 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>-0.15 0 0.2 0 0 0</pose>
+    </link>
+
+    <link name='wheel_l'>
+      <inertial>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_l_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_l_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0 0.22 0.1 0 1.5707 1.5707</pose>
+    </link>
+    <joint name='wheel_l_joint' type='revolute'>
+      <parent>body</parent>
+      <child>wheel_l</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <link name='wheel_r'>
+      <inertial>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_r_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='wheel_r_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0 -0.22 0.1 0 1.5707 1.5707</pose>
+    </link>
+    <joint name='wheel_r_joint' type='revolute'>
+      <parent>body</parent>
+      <child>wheel_r</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <link name='rear_ball'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='rear_ball_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.1</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <visual name='rear_ball_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.1</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>-0.3 0 0.1 0 0 0</pose>
+    </link>
+    <joint name='rear_ball_joint' type='fixed'>
+      <parent>body</parent>
+      <child>rear_ball</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>20</updateRate>
+      <left_joint>wheel_l_joint</left_joint>
+      <right_joint>wheel_r_joint</right_joint>
+      <wheel_separation>0.4</wheel_separation>
+      <wheel_diameter>0.1</wheel_diameter>
+      <max_wheel_acceleration>10</max_wheel_acceleration>
+      <max_wheel_torque>1</max_wheel_torque>
+      <publish_odom>true</publish_odom>
+      <odometry_topic>odom1</odometry_topic>
+      <odometry_frame>odom1</odometry_frame>
+      <robot_base_frame>base_footprint1</robot_base_frame>
+    </plugin>
+
+    <!-- arm base -->
+    <link name='arm_base'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_base_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.4 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='arm_base_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.4 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Gray</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0.1 0 0.35 0 0 0</pose>
+    </link>
+    <joint name='arm_base_joint' type='fixed'>
+      <parent>body</parent>
+      <child>arm_base</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <!-- camera -->
+    <link name='left_camera'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_camera_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.03 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='left_camera_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.1 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0 0.05 0.5 0 0 1.5707</pose>
+
+      <sensor name="camera" type="depth">
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <camera name="intel_realsense_r200">
+          <horizontal_fov>1.02974</horizontal_fov>
+          <image>
+            <width>400</width>
+            <height>300</height>
+            <format>R8G8B8</format>
+          </image>
+          <depth_camera>
+          </depth_camera>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <!-- Noise is sampled independently per pixel on each frame.
+                  That pixel's noise value is added to each of its color
+                  channels, which at that point lie in the range [0,1]. -->
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
+          <ros>
+            <!-- <namespace>test_cam</namespace> -->
+            <!-- <remapping>image_raw:=image_demo</remapping> -->
+            <!-- <remapping>camera_info:=camera_info_demo</remapping> -->
+          </ros>
+          <!-- camera_name>omit so it defaults to sensor name</camera_name-->
+          <!-- frame_name>omit so it defaults to link name</frameName-->
+          <!-- <hack_baseline>0.07</hack_baseline> -->
+        </plugin>
+      </sensor>
+    </link>
+    <joint name='left_camera_joint' type='fixed'>
+      <parent>arm_base</parent>
+      <child>left_camera</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <link name='elevator'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='elevator_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.4 0.02</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='elevator_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.4 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Gray</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0.1 0 1 0 0 0</pose>
+    </link>
+    <joint name='elevator_joint' type='prismatic'>
+      <parent>body</parent>
+      <child>elevator</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <dynamics>
+          <damping>0.0</damping>
+          <friction>0.0</friction>
+        </dynamics>
+        <limit>
+          <effort>1000.0</effort>
+          <lower>-1</lower>
+          <upper>5</upper>
+          <velocity>30.0</velocity>
+        </limit>
+      </axis>
+    </joint>
+
+    <plugin name="linear_joint" filename="libst_gazebo_linear_joint.so">
+    </plugin>
+
+  </model>
+</sdf>
