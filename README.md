@@ -1,2 +1,2 @@
 # st_robot
-study ROS2
+test sim robot for move & elevator & arm
