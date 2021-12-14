@@ -46,6 +46,9 @@ private:
 
   /// Last update time
   gazebo::common::Time last_update_time_;
+  gazebo::common::Time last_sim_time_;
+
+  float i_term_;
 };
 }  // namespace gazebo_plugins
 

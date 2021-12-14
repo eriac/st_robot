@@ -355,7 +355,65 @@
       <child>elevator</child>
       <pose>0 0 0 0 0 0</pose>
       <axis>
-        <xyz>1 0 0</xyz>
+        <xyz>0 0 1</xyz>
+        <dynamics>
+          <damping>0.0</damping>
+          <friction>0.0</friction>
+        </dynamics>
+        <limit>
+          <effort>100.0</effort>
+          <lower>-0.1</lower>
+          <upper>0.5</upper>
+          <velocity>0.1</velocity>
+        </limit>
+      </axis>
+    </joint>
+
+    <plugin name="linear_joint" filename="libst_gazebo_linear_joint.so">
+    </plugin>
+
+    <link name='arm1'>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm1_collision'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.04 0.04</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='arm1_visual'>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.04 0.04</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Gray</name>
+          </script>
+        </material>
+      </visual>
+      <pose frame=''>0 0 1.1 0 0 1.5707</pose>
+    </link>
+    <joint name='arm1_joint' type='revolute'>
+      <parent>elevator</parent>
+      <child>arm1</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
         <dynamics>
           <damping>0.0</damping>
           <friction>0.0</friction>
@@ -368,9 +426,5 @@
         </limit>
       </axis>
     </joint>
-
-    <plugin name="linear_joint" filename="libst_gazebo_linear_joint.so">
-    </plugin>
-
   </model>
 </sdf>

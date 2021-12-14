@@ -39,13 +39,6 @@ LinearJoint::LinearJoint()
 
 LinearJoint::~LinearJoint()
 {
-  // for (auto pub : impl_->image_pub_) {
-  //   pub.shutdown();
-  // }
-  // if (param_change_callback_handler_) {
-  //   impl_->ros_node_->remove_on_set_parameters_callback(param_change_callback_handler_.get());
-  // }
-  // param_change_callback_handler_.reset();
 }
 
 void LinearJoint::Load(gazebo::physics::ModelPtr _model, sdf::ElementPtr _sdf)
@@ -63,13 +56,6 @@ void LinearJoint::Reset(){
 }
 
 void LinearJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
-  double seconds_since_last_update = (_info.simTime - last_update_time_).Double();
-  if (seconds_since_last_update < 0.1) {
-    return;
-  }
-  last_update_time_ = _info.simTime;
-
-  // 10Hz
   std::string elevator_joint_name = "elevator_joint";
   auto elevator_joint = model_->GetJoint(elevator_joint_name);
   if (!elevator_joint) {
@@ -78,15 +64,37 @@ void LinearJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
       "Joint [%s] not found, plugin will not work.", std::string("elevator_joint").c_str());
     return;
   }
+
+
   double pos = elevator_joint->Position();
   double vel = elevator_joint->GetVelocity(0);
+  double force = elevator_joint->GetForce(0);
+
+  float vel1 = target_velocity_.data;
+  float vel2 = std::min(vel1, (float)((0.45-pos)*0.5));
+  float vel3 = std::max(vel2, (float)((-0.05-pos)*0.5));
+
+  float diff = vel - vel3;
+  i_term_ += diff * (_info.simTime - last_sim_time_).Float();
+  float kp = 10.0;
+  float ki = 10.0;
+  elevator_joint->SetForce(0, -kp * diff - ki * i_term_);  
+  
+  last_sim_time_ = _info.simTime;
+  double seconds_since_last_update = (_info.simTime - last_update_time_).Double();
+  if (seconds_since_last_update < 0.1) {
+    return;
+  }
+  last_update_time_ = _info.simTime;
+
+  // 10Hz
 
   sensor_msgs::msg::JointState joint_state;
   joint_state.name.push_back(elevator_joint_name);
   joint_state.position.push_back(pos);
   joint_state.velocity.push_back(vel);
+  joint_state.effort.push_back(force);
   joint_pub_->publish(joint_state);
-  elevator_joint->SetVelocity (0, target_velocity_.data);  
 }
 
 void LinearJoint::TargetVelocityCallback(const std_msgs::msg::Float32::SharedPtr msg){
