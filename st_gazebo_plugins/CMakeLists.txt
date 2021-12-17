@@ -25,6 +25,7 @@ find_package(gazebo_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
+# linear joint
 add_library(st_gazebo_linear_joint SHARED
   src/linear_joint.cpp
 )
@@ -39,6 +40,22 @@ ament_target_dependencies(st_gazebo_linear_joint
 )
 ament_export_libraries(st_gazebo_linear_joint)
 
+# arm joint
+add_library(st_gazebo_arm_joint SHARED
+  src/arm_joint.cpp
+)
+target_include_directories(st_gazebo_arm_joint PUBLIC include)
+ament_target_dependencies(st_gazebo_arm_joint
+  "rclcpp"
+  "gazebo_dev"
+  "gazebo_ros"
+  "gazebo_msgs"
+  "std_msgs"
+  "sensor_msgs"
+)
+ament_export_libraries(st_gazebo_arm_joint)
+
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -50,7 +67,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(TARGETS st_gazebo_linear_joint
+install(TARGETS st_gazebo_linear_joint st_gazebo_arm_joint
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin

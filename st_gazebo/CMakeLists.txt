@@ -19,9 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
-
-install(DIRECTORY worlds models urdf rviz
+install(DIRECTORY launch worlds models urdf rviz
   DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -498,6 +498,9 @@
       </axis>
     </joint>
 
+    <plugin name="arm_joint" filename="libst_gazebo_arm_joint.so">
+    </plugin>
+
     <!-- camera -->
     <link name='left_camera'>
       <inertial>
