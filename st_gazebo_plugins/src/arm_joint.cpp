@@ -46,7 +46,7 @@ void ArmJoint::Load(gazebo::physics::ModelPtr _model, sdf::ElementPtr _sdf)
   model_ = _model;
   ros_node_ = gazebo_ros::Node::Get(_sdf);
   joint_pub_ = ros_node_->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
-  vel_sub_ = ros_node_->create_subscription<std_msgs::msg::Float32MultiArray>("arm/target_velocity_list", 10,
+  vel_sub_ = ros_node_->create_subscription<std_msgs::msg::Float32MultiArray>("device/arm/target_velocity_list", 10,
     std::bind(&ArmJoint::TargetVelocityCallback, this, std::placeholders::_1));
   update_connection_ = gazebo::event::Events::ConnectWorldUpdateBegin(
     std::bind(&ArmJoint::OnUpdate, this, std::placeholders::_1));
@@ -73,8 +73,8 @@ void ArmJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
     double vel = arm_joints[i]->GetVelocity(0);
 
     float vel1 = target_velocity_[i];
-    float vel2 = std::min(vel1, (float)((1.7-pos)*2.0));
-    float vel3 = std::max(vel2, (float)((-1.7-pos)*2.0));
+    float vel2 = std::min(vel1, (float)((2.5-pos)*2.0));
+    float vel3 = std::max(vel2, (float)((-2.5-pos)*2.0));
 
     float diff = vel - vel3;
     i_term_[i] += diff * (_info.simTime - last_sim_time_).Float();

@@ -46,7 +46,7 @@ void LinearJoint::Load(gazebo::physics::ModelPtr _model, sdf::ElementPtr _sdf)
   model_ = _model;
   ros_node_ = gazebo_ros::Node::Get(_sdf);
   joint_pub_ = ros_node_->create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
-  vel_sub_ = ros_node_->create_subscription<std_msgs::msg::Float32>("elevator/target_velocity", 10,
+  vel_sub_ = ros_node_->create_subscription<std_msgs::msg::Float32>("device/elevator/target_velocity", 10,
     std::bind(&LinearJoint::TargetVelocityCallback, this, std::placeholders::_1));
   update_connection_ = gazebo::event::Events::ConnectWorldUpdateBegin(
     std::bind(&LinearJoint::OnUpdate, this, std::placeholders::_1));

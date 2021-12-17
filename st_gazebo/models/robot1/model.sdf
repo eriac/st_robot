@@ -208,12 +208,13 @@
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>20</updateRate>
+      <argument>cmd_vel:=device/move/cmd_vel</argument>
       <left_joint>wheel_l_joint</left_joint>
       <right_joint>wheel_r_joint</right_joint>
       <wheel_separation>0.4</wheel_separation>
       <wheel_diameter>0.1</wheel_diameter>
-      <max_wheel_acceleration>10</max_wheel_acceleration>
-      <max_wheel_torque>1</max_wheel_torque>
+      <max_wheel_acceleration>3</max_wheel_acceleration>
+      <max_wheel_torque>0.5</max_wheel_torque>
       <publish_odom>true</publish_odom>
       <odometry_topic>odom1</odometry_topic>
       <odometry_frame>odom1</odometry_frame>
@@ -381,8 +382,8 @@
         </dynamics>
         <limit>
           <effort>100.0</effort>
-          <lower>-2</lower>
-          <upper>2</upper>
+          <lower>-6</lower>
+          <upper>6</upper>
           <velocity>2.0</velocity>
         </limit>
       </axis>
@@ -436,8 +437,8 @@
         </dynamics>
         <limit>
           <effort>100.0</effort>
-          <lower>-2</lower>
-          <upper>2</upper>
+          <lower>-6</lower>
+          <upper>6</upper>
           <velocity>2.0</velocity>
         </limit>
       </axis>
@@ -491,8 +492,8 @@
         </dynamics>
         <limit>
           <effort>100.0</effort>
-          <lower>-2</lower>
-          <upper>2</upper>
+          <lower>-6</lower>
+          <upper>6</upper>
           <velocity>2.0</velocity>
         </limit>
       </axis>
@@ -536,7 +537,7 @@
           </script>
         </material>
       </visual>
-      <pose frame='elevator'>-0.15 0.05 0.2 0 0.2618 1.5707</pose>
+      <pose frame='elevator'>-0.1 0.05 0.2 0 0.2618 1.5707</pose>
 
       <sensor name="camera" type="depth">
         <always_on>true</always_on>

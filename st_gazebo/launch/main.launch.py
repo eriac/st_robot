@@ -54,6 +54,23 @@ def generate_launch_description():
             parameters=[{'robot_description': robot_description}]
         ),
 
+        Node(
+            package='joy',
+            executable='joy_node'
+        ),
+        Node(
+            package='st_nodes',
+            executable='joy_distributer'
+        ),
+        Node(
+            package='st_nodes',
+            executable='move_navigator'
+        ),
+        Node(
+            package='st_nodes',
+            executable='arm_navigator'
+        ),
+
         # Node(
         #     package='rviz2',
         #     executable='rviz2',
