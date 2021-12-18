@@ -1,0 +1,33 @@
+material WoodTexture
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        // Relative to the location of the material script
+        texture wood.jpeg
+        // Repeat the texture over the surface (4 per face)
+        scale 0.5 0.5
+      }
+    }
+  }
+}
+
+material PlasticTexture
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        // Relative to the location of the material script
+        texture plastic1.jpg
+        // Repeat the texture over the surface (4 per face)
+        scale 0.5 0.5
+      }
+    }
+  }
+}

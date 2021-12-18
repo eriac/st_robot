@@ -76,7 +76,7 @@ void LinearJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
 
   float diff = vel - vel3;
   i_term_ += diff * (_info.simTime - last_sim_time_).Float();
-  float kp = 10.0;
+  float kp = 40.0;
   float ki = 10.0;
   elevator_joint->SetForce(0, -kp * diff - ki * i_term_);  
   
