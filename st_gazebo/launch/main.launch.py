@@ -70,12 +70,16 @@ def generate_launch_description():
             package='st_nodes',
             executable='arm_navigator'
         ),
+        Node(
+            package='st_nodes',
+            executable='elevator_navigator'
+        ),
 
-        # Node(
-        #     package='rviz2',
-        #     executable='rviz2',
-        #     name='rviz2',
-        #     output='screen',
-        #     arguments=['-d', str(pkg_path / 'rviz/default.rviz')],
-        # ),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            output='screen',
+            arguments=['-d', str(pkg_path / 'rviz/default.rviz')],
+        ),
     ])

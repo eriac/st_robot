@@ -90,6 +90,7 @@ void LinearJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
   // 10Hz
 
   sensor_msgs::msg::JointState joint_state;
+  joint_state.header.stamp = gazebo_ros::Convert<builtin_interfaces::msg::Time>(_info.simTime);
   joint_state.name.push_back(elevator_joint_name);
   joint_state.position.push_back(pos);
   joint_state.velocity.push_back(vel);

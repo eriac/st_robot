@@ -6,23 +6,23 @@
   <joint name="body_joint" type="fixed">
     <parent link="base_link"/>
     <child  link="body_link"/>
-    <origin xyz="0.5 0 0" rpy="0 0 0"/>
+    <origin xyz="-0.15 0 0.2" rpy="0 0 0"/>
   </joint>
   <link name="body_link">
     <visual>
       <geometry>
-        <box size="0.3 0.3 0.2"/>
+        <box size="0.6 0.4 0.2"/>
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="red">
-        <color rgba="1.0 0.0 0.0 2.0"/>
+        <color rgba="1.0 0.0 0.0 1.0"/>
       </material>
     </visual>
   </link>
 
   <joint name="elevator_joint" type="prismatic">
-    <axis xyz="1 0 0"/>
-    <origin xyz="0.0 0.0 0.0"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.1 0 0.45"/>
     <parent link="base_link"/>
     <child link="elevator"/>
     <limit effort="1000.0" lower="-15" upper="15" velocity="30"/>
@@ -31,16 +31,106 @@
   <link name="elevator">
     <visual>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <box size="0.1 0.4 0.02"/>
       </geometry>
       <origin xyz="0 0 0"/>
       <material name="blue">
         <color rgba="0 0 .8 1"/>
       </material>
     </visual>
-    <inertial>
-      <mass value="1"/>
-      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-    </inertial>
+  </link>
+
+  <joint name="arm_base_joint" type="fixed">
+    <origin xyz="0.05 0 0.05" rpy="0 0 3.1415"/>
+    <parent link="elevator"/>
+    <child link="arm_base"/>
+  </joint>
+  <link name="arm_base">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.1"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="arm1_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0.06"/>
+    <parent link="arm_base"/>
+    <child link="arm1"/>
+    <limit effort="1000.0" lower="-15" upper="15" velocity="30"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <link name="arm1">
+    <visual>
+      <geometry>
+        <box size="0.2 0.04 0.02"/>
+      </geometry>
+      <origin xyz="0.1 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="arm2_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.2 0 -0.02"/>
+    <parent link="arm1"/>
+    <child link="arm2"/>
+    <limit effort="1000.0" lower="-15" upper="15" velocity="30"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <link name="arm2">
+    <visual>
+      <geometry>
+        <box size="0.2 0.04 0.02"/>
+      </geometry>
+      <origin xyz="0.1 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="arm3_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.2 0 -0.02"/>
+    <parent link="arm2"/>
+    <child link="arm3"/>
+    <limit effort="1000.0" lower="-15" upper="15" velocity="30"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <link name="arm3">
+    <visual>
+      <geometry>
+        <box size="0.1 0.04 0.02"/>
+      </geometry>
+      <origin xyz="0.05 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left_camera_joint" type="fixed">
+    <parent link="elevator"/>
+    <child  link="left_camera"/>
+    <origin xyz="-0.1 0.05 0.2" rpy="-1.8326 0 0"/>
+  </joint>
+  <link name="left_camera">
+    <visual>
+      <geometry>
+        <box size="0.1 0.02 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="red">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+      </material>
+    </visual>
   </link>
 </robot>

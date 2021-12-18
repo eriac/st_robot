@@ -209,6 +209,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>20</updateRate>
       <argument>cmd_vel:=device/move/cmd_vel</argument>
+      <argument>odom:=device/move/odom</argument>
       <left_joint>wheel_l_joint</left_joint>
       <right_joint>wheel_r_joint</right_joint>
       <wheel_separation>0.4</wheel_separation>
@@ -216,9 +217,10 @@
       <max_wheel_acceleration>3</max_wheel_acceleration>
       <max_wheel_torque>0.5</max_wheel_torque>
       <publish_odom>true</publish_odom>
-      <odometry_topic>odom1</odometry_topic>
-      <odometry_frame>odom1</odometry_frame>
-      <robot_base_frame>base_footprint1</robot_base_frame>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+      <publish_odom_tf>true</publish_odom_tf>
     </plugin>
 
     <link name='elevator'>
@@ -543,6 +545,7 @@
         <always_on>true</always_on>
         <visualize>true</visualize>
         <update_rate>10</update_rate>
+        <pose>0 0 0 0 0 0</pose>
         <camera name="intel_realsense_r200">
           <horizontal_fov>1.02974</horizontal_fov>
           <image>
@@ -566,6 +569,8 @@
           </noise>
         </camera>
         <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
+          <min_depth>0.2</min_depth>
+          
           <ros>
             <!-- <namespace>test_cam</namespace> -->
             <!-- <remapping>image_raw:=image_demo</remapping> -->
@@ -580,7 +585,7 @@
     <joint name='left_camera_joint' type='fixed'>
       <parent>elevator</parent>
       <child>left_camera</child>
-      <pose ralative_to="elevator">0 0 0 0 0 0</pose>
+      <pose relative_to="elevator">0 0 0 0 0 0</pose>
     </joint>
 
 

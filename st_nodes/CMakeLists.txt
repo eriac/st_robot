@@ -8,6 +8,7 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -21,13 +22,16 @@ add_executable(joy_distributer src/joy_distributer.cpp)
 ament_target_dependencies(joy_distributer rclcpp std_msgs geometry_msgs sensor_msgs)
 
 add_executable(move_navigator src/move_navigator.cpp)
-ament_target_dependencies(move_navigator rclcpp std_msgs geometry_msgs sensor_msgs)
+ament_target_dependencies(move_navigator rclcpp std_msgs geometry_msgs sensor_msgs nav_msgs)
 
 add_executable(arm_navigator src/arm_navigator.cpp)
 ament_target_dependencies(arm_navigator rclcpp std_msgs geometry_msgs sensor_msgs)
 
+add_executable(elevator_navigator src/elevator_navigator.cpp)
+ament_target_dependencies(elevator_navigator rclcpp std_msgs geometry_msgs sensor_msgs)
+
 install(TARGETS
-  joy_distributer move_navigator arm_navigator
+  joy_distributer move_navigator arm_navigator elevator_navigator
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

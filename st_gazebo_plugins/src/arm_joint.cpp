@@ -94,6 +94,7 @@ void ArmJoint::OnUpdate(const gazebo::common::UpdateInfo & _info){
   // 10Hz
   // telemetry
   sensor_msgs::msg::JointState joint_state;
+  joint_state.header.stamp = gazebo_ros::Convert<builtin_interfaces::msg::Time>(_info.simTime);
   for (size_t i = 0; i < 3; i++) {
     joint_state.name.push_back(arm_joint_names[i]);
     double pos = arm_joints[i]->Position();
