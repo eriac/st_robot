@@ -27,6 +27,16 @@ class JoyDistibuter : public rclcpp::Node
   private:
     void TimerCallback()
     {
+      /*
+       * position
+       * x = l*cos(th1) + l*cos(th1+th2)
+       * y = l*sin(th1) + l*sin(th1+th2)
+       * 
+       * velocity (rx = round x)
+       * rx = (-l*sin(th1) - l*sin(th1+th2))*rth1 - l*sin(th1+th2)*rth2
+       * ry = ( l*cos(th1) + l*cos(th1+th2))*rth1 + l*cos(th1+th2)*rth2
+       */
+
       float l = 0.2;
       float th1 = joint_position_[0];
       float th2 = joint_position_[1];
